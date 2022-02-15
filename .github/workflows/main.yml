@@ -37,7 +37,7 @@ jobs:
 
       - name: Build
         id: build
-        run: mvn compile
+        run: mvn clean package
 
       - name: Read OpenAPI Spec
         id: readSpec
