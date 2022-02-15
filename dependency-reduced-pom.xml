@@ -19,26 +19,28 @@
           </execution>
         </executions>
         <configuration>
-          <servers>
-            <server>
-              <url>https://services.exmple.it/base/path</url>
-              <description />
-            </server>
-          </servers>
-          <info>
-            <title>Hello World Service</title>
-            <version>1.0.0</version>
-            <contact>
-              <email>support@leanix.net</email>
-              <name>LeanIX Support</name>
-              <url>https://www.leanix.net/en/</url>
-            </contact>
-            <license>
-              <url>http://www.apache.org/licenses/</url>
-              <name>Apache 2.0</name>
-            </license>
-          </info>
-          <descriptionFile>src/test/resources/descriptions.md</descriptionFile>
+          <swaggerConfig>
+            <servers>
+              <server>
+                <url>https://services.exmple.it/base/path</url>
+                <description />
+              </server>
+            </servers>
+            <info>
+              <title>Hello World Service</title>
+              <version>1.0.0</version>
+              <contact>
+                <email>support@leanix.net</email>
+                <name>LeanIX Support</name>
+                <url>https://www.leanix.net/en/</url>
+              </contact>
+              <license>
+                <url>http://www.apache.org/licenses/</url>
+                <name>Apache 2.0</name>
+              </license>
+            </info>
+            <descriptionFile>src/test/resources/descriptions.md</descriptionFile>
+          </swaggerConfig>
           <resourcePackages>
             <resourcePackage>org.example.resources</resourcePackage>
             <resourcePackage>org.example.core.model</resourcePackage>

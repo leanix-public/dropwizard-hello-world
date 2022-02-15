@@ -71,6 +71,7 @@
                 <artifactId>swagger-maven-plugin</artifactId>
                 <version>2.1.6</version>
                 <configuration>
+                    <swaggerConfig>
                     <servers>
                         <server>
                         <url>https://services.exmple.it/base/path</url>
@@ -91,6 +92,7 @@
                         </license>
                     </info>
                     <descriptionFile>src/test/resources/descriptions.md</descriptionFile>
+                    </swaggerConfig>
                     <resourcePackages>
                         <resourcePackage>org.example.resources</resourcePackage>
                         <resourcePackage>org.example.core.model</resourcePackage>
