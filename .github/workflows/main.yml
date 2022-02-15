@@ -35,9 +35,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Package
+      - name: Build
         id: build
-        run: mvn clean package
+        run: mvn compile
 
       - name: Read OpenAPI Spec
         id: readSpec
