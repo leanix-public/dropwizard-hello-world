@@ -1,0 +1,70 @@
+name: Dropwizard Hello World
+
+on:
+  repository_dispatch:
+    types: [trigger-workflow]
+  push:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
+env:
+  ACTION_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+  LEANIX_WORKSPACE_FQDN: demo-eu-1.leanix.net
+
+
+jobs:
+  main:
+    name: Hello-World-${{ github.run_number }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Java 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Cache mvn
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Build
+        id: build
+        run: mvn clean package
+
+      - name: Read OpenAPI Spec
+        id: readSpec
+        run: |
+          content=`cat generated/OpenAPI-Specification.json`
+          # the following lines are only required for multi line json
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          # end of optional handling for multi line json
+          echo "::set-output name=openAPIJson::$content"
+
+      - name: Generate Bearer Token
+        id: gen-bearerToken
+        shell: bash
+        run: echo "::set-output name=bearerToken::$(curl https://${{env.LEANIX_WORKSPACE_FQDN}}/services/mtm/v1/oauth2/token --request POST --user "apitoken:${{ secrets.LEANIX_API_TOKEN }}" --data "grant_type=client_credentials" | jq -r .'access_token')"
+
+
+      - name: LeanIX OpenAPI Integration
+        id: leanix-openapi
+        if: ${{steps.gen-bearerToken.outputs.bearerToken}}
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: https://${{ env.LEANIX_WORKSPACE_FQDN }}/services/cicd-connector/v2/oas
+          method: 'POST'
+          bearerToken: ${{steps.gen-bearerToken.outputs.bearerToken}}
+          data: ${{steps.readSpec.outputs.openAPIJson}}
+
+
+
