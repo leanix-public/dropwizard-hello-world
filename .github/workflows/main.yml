@@ -43,7 +43,7 @@ jobs:
       - name: Read OpenAPI Metadata
         id: readSpec
         run: |
-          content=`jq '.' OpenAPI-Metadata.json | jq -sR '.' `
+          content=`jq '.' test.json | jq -sR '.' | sed -e 's/\\n//g'`
           echo "::set-output name=openAPIMetadata::$content"
 
       - name: Generate Bearer Token
@@ -61,7 +61,7 @@ jobs:
           method: 'POST'
           contentType: 'multipart/form-data'
           bearerToken: ${{steps.gen-bearerToken.outputs.bearerToken}}
-          data: '{"data": "${{steps.readSpec.outputs.openAPIMetadata}}"}'
+          data: '{"data": ${{steps.readSpec.outputs.openAPIMetadata}}}'
           files: '{ "specRequest": "${{ github.workspace }}/generated/OpenAPI-Specification.json" }'
           timeout: 60000
 
