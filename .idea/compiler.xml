@@ -2,6 +2,12 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="dropwizard-hello-world (1)" />
+      </profile>
       <profile name="Annotation profile for HelloWorld" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -33,22 +39,18 @@
           <entry name="$MAVEN_REPOSITORY$/org/jetbrains/kotlinx/kotlinx-metadata-jvm/0.3.0/kotlinx-metadata-jvm-0.3.0.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar" />
         </processorPath>
-        <module name="dropwizard-hello-world (2)" />
-      </profile>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="dropwizard-hello-world (1)" />
+        <module name="dropwizard-hello-world" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="dropwizard-hello-world" target="11" />
       <module name="dropwizard-hello-world (1)" target="1.5" />
       <module name="dropwizard-hello-world (2)" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="dropwizard-hello-world" options="-parameters" />
       <module name="dropwizard-hello-world (2)" options="-parameters" />
     </option>
   </component>
