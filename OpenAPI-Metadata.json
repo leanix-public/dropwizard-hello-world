@@ -1,0 +1,5 @@
+{
+    "softwareArtifactId": "swa-001",
+    "url": "https://<host>/services/someService/v2/openapi.json",
+    "teamExternalId": "team-001"
+  }
