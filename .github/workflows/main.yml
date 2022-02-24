@@ -43,12 +43,7 @@ jobs:
       - name: Read OpenAPI Metadata
         id: readSpec
         run: |
-          content=`cat OpenAPI-Metadata.json`
-          # the following lines are only required for multi line json
-          content="${content//'%'/'%25'}"
-          content="${content//$'\n'/'%0A'}"
-          content="${content//$'\r'/'%0D'}"
-          # end of optional handling for multi line json
+          content=`jq '.' OpenAPI-Metadata.json | jq -sR '.' `
           echo "::set-output name=openAPIMetadata::$content"
 
       - name: Generate Bearer Token
