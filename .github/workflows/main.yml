@@ -58,6 +58,7 @@ jobs:
         with:
           url: https://${{ env.LEANIX_WORKSPACE_FQDN }}/services/cicd-connector/v2/openapispec
           method: 'POST'
+          contentType: 'multipart/form-data'
           bearerToken: ${{steps.gen-bearerToken.outputs.bearerToken}}
           data: ${{steps.readSpec.outputs.openAPIJson}}
           files: '{ "data": "${{ github.workspace }}/generated/OpenAPI-Specification.json" }'
