@@ -67,7 +67,7 @@ jobs:
           contentType: 'multipart/form-data'
           bearerToken: ${{steps.gen-bearerToken.outputs.bearerToken}}
           data: '{"data": "${{steps.readSpec.outputs.openAPIMetadata}}"}'
-          files: '{ "specRequest": "${{ github.workspace }}/generated/OpenAPI-Specification.json" }'
+          files: '{ "specRequest": ${{ github.workspace }}/generated/OpenAPI-Specification.json }'
           timeout: 60000
 
 
