@@ -40,12 +40,6 @@ jobs:
         id: build
         run: mvn clean package
 
-      - name: Read OpenAPI Metadata
-        id: readSpec
-        run: |
-          content=`jq '.' OpenAPI-Metadata.json | jq -sR '.' | sed -e 's/\\n//g'`
-          echo "::set-output name=openAPIMetadata::$content"
-
       - name: Generate Bearer Token
         id: gen-bearerToken
         shell: bash
@@ -61,7 +55,7 @@ jobs:
           method: 'POST'
           contentType: 'multipart/form-data'
           bearerToken: ${{steps.gen-bearerToken.outputs.bearerToken}}
-          data: '{"data": ${{steps.readSpec.outputs.openAPIMetadata}}}'
+          data: '{"data": "{  \"microserviceId\": \"SVC-00001\",  \"url\": \"https://service.com/services/someService/v2/openapi.json\"}"}'
           files: '{ "specRequest": "${{ github.workspace }}/generated/OpenAPI-Specification.json" }'
           timeout: 60000
 
