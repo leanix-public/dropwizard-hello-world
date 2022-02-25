@@ -1,5 +1,4 @@
 {
-  "softwareArtifactId": "swa-001",
-  "url": "https://<host>/services/someService/v2/openapi.json",
-  "teamExternalId": "team-001"
+  "microserviceId": "SVC-00001",
+  "url": "https://<host>/services/someService/v2/openapi.json"
 }
