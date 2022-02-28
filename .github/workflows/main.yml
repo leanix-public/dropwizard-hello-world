@@ -12,7 +12,6 @@ on:
 env:
   ACTION_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
   LEANIX_WORKSPACE_FQDN: demo-eu-1.leanix.net
-  LEANIX_WORKSPACE_TEST_FQDN: test-app-flow-2.leanix.net
 
 
 jobs:
@@ -43,7 +42,7 @@ jobs:
       - name: Generate Bearer Token
         id: gen-bearerToken
         shell: bash
-        run: echo "::set-output name=bearerToken::$(curl https://${{env.LEANIX_WORKSPACE_TEST_FQDN}}/services/mtm/v1/oauth2/token --request POST --user "apitoken:${{ secrets.LEANIX_TEST_API_TOKEN }}" --data "grant_type=client_credentials" | jq -r .'access_token')"
+        run: echo "::set-output name=bearerToken::$(curl https://${{env.LEANIX_WORKSPACE_FQDN}}/services/mtm/v1/oauth2/token --request POST --user "apitoken:${{ secrets.LEANIX_API_TOKEN }}" --data "grant_type=client_credentials" | jq -r .'access_token')"
 
 
       - name: LeanIX OpenAPI Integration
@@ -51,7 +50,7 @@ jobs:
         if: ${{steps.gen-bearerToken.outputs.bearerToken}}
         uses: fjogeleit/http-request-action@master
         with:
-          url: https://${{ env.LEANIX_WORKSPACE_TEST_FQDN }}/services/cicd-connector/v2/openapispec
+          url: https://${{ env.LEANIX_WORKSPACE_FQDN }}/services/cicd-connector/v2/openapispec
           method: 'POST'
           contentType: 'multipart/form-data'
           bearerToken: ${{steps.gen-bearerToken.outputs.bearerToken}}
