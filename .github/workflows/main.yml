@@ -11,7 +11,7 @@ on:
 
 env:
   ACTION_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-  LEANIX_WORKSPACE_FQDN: demo-eu-1.leanix.net
+  LEANIX_WORKSPACE_FQDN: ebsco.leanix.net
 
 
 jobs:
